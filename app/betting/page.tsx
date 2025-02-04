@@ -35,6 +35,7 @@ export default function BettingPage() {
   }, [supabase, user]);
 
   const fetchBets = async () => {
+    if (!supabase) return;
     try {
       const { data: betsData, error: betsError } = await supabase
         .from('bets')
