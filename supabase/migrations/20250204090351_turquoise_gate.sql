@@ -31,7 +31,7 @@ ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can read their own data"
   ON users
   FOR SELECT
-  USING (true);
+  USING (id = auth.uid());
 
 -- Tasks table
 CREATE TABLE IF NOT EXISTS tasks (
@@ -55,10 +55,11 @@ CREATE TABLE IF NOT EXISTS user_tasks (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid REFERENCES users(id) ON DELETE CASCADE,
   task_id uuid REFERENCES tasks(id) ON DELETE CASCADE,
-  completed_at timestamptz DEFAULT now(),
-  reward_claimed boolean DEFAULT false,
-  created_at timestamptz DEFAULT now(),
-  UNIQUE(user_id, task_id)
+  description text NOT NULL,
+  difficulty integer NOT NULL,
+  coin_reward integer NOT NULL,
+  is_active boolean DEFAULT true,
+  created_at timestamptz DEFAULT now()
 );
 
 ALTER TABLE user_tasks ENABLE ROW LEVEL SECURITY;
@@ -112,3 +113,12 @@ CREATE INDEX IF NOT EXISTS idx_user_tasks_user_id ON user_tasks(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_tasks_task_id ON user_tasks(task_id);
 CREATE INDEX IF NOT EXISTS idx_bet_participants_bet_id ON bet_participants(bet_id);
 CREATE INDEX IF NOT EXISTS idx_bet_participants_user_id ON bet_participants(user_id);
+
+
+INSERT INTO tasks (title, description, reward_amount)
+VALUES 
+  ('Join our community for the latest updates and discussions!', 'Join our community for the latest updates and discussions!', 50),
+  ('Get exclusive content and insights from our experts!', 'Get exclusive content and insights from our experts!', 50),
+  ('Participate in fun activities and earn rewards!', 'Participate in fun activities and earn rewards!', 50),
+  ('Stay informed with the latest news and announcements!', 'Stay informed with the latest news and announcements!', 50),
+  ('Connect with like-minded individuals and share ideas!', 'Connect with like-minded individuals and share ideas!', 50);
