@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS tasks (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  description text NOT NULL,
-  difficulty integer NOT NULL,
-  coin_reward integer NOT NULL,
-  is_active boolean DEFAULT true,
-  created_at timestamptz DEFAULT now()
-);
