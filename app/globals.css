@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 12%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 15%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 15%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 354 100% 70%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 173 58% 39%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 173 58% 39%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 354 100% 70%;
+  --radius: 0.75rem;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+.animate-in {
+  animation: animate-in 0.5s ease-out;
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-button {
+  @apply relative overflow-hidden rounded-lg bg-primary px-8 py-4 text-white transition-all hover:bg-primary/90 active:scale-95;
+}
+
+.game-button::after {
+  content: '';
+  @apply absolute inset-0 block bg-white/20 opacity-0 transition-opacity;
+}
+
+.game-button:active::after {
+  @apply opacity-100;
+}
+
+.stats-card {
+  @apply rounded-lg bg-card p-6 shadow-lg transition-transform hover:scale-[1.02];
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
